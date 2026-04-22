@@ -1,0 +1,6 @@
+# Keeps Cursor indexing away from huge trees (optional; separate from .gitignore).
+backend/.venv/
+frontend/node_modules/
+frontend/.vite/
+**/__pycache__/
+

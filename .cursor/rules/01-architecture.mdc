@@ -1,0 +1,42 @@
+---
+description: Architecture guidance for EVA project
+alwaysApply: true
+---
+
+Follow these architecture principles:
+
+1. Use separation of concerns:
+   - API layer
+   - application/service layer
+   - EVA orchestration layer
+   - **Pydantic (or equivalent) contract models** for EVAClientRequest / EVAServiceResponse — keep transport shapes out of ad-hoc dicts in routes
+   - LLM provider abstraction
+   - state/memory/**skill vector** access layer
+   - infrastructure/config layer
+
+2. Keep business logic out of Flask route handlers.
+
+3. Prefer interfaces or adapters around:
+   - LLM access
+   - Redis access
+   - vector search
+   - agent runtime
+   - external tools
+
+4. Preserve future extensibility for:
+   - micro-frontend integration
+   - alternative LLM providers
+   - alternative vector stores
+   - multiple deployment environments
+
+5. Keep the architecture POC-friendly:
+   - simple defaults
+   - low boilerplate
+   - minimal moving parts
+   - no unnecessary distributed complexity
+
+6. Before large implementation, prefer to propose:
+   - folder structure
+   - component responsibilities
+   - data flow
+   - config approach

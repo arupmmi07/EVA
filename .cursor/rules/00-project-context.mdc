@@ -1,0 +1,36 @@
+---
+description: Core project context for EVA Medical Assistant
+alwaysApply: true
+---
+
+This repository is for **EVA Medical Assistant** (WebPT-aligned POC: governed assistant, not a literal “super agent” orchestrating durable workflows in prompt space).
+
+Project phase:
+- Early POC / foundation stage
+
+Primary goals right now:
+- establish project structure
+- keep FE and BE in one repository
+- **schema-driven EVA Client ↔ EVA Service contract** (`EVAClientRequest` / `EVAServiceResponse`) over **HTTP POST** first
+- **skills registry (JSON) + Redis-backed vectors** for retrieval, then LLM skill selection and structured responses
+- focus on backend behavior; **demo frontend** in `frontend/` exercises the flow
+- prepare for future MFE frontend integration
+- keep deployment simple and extensible
+
+Current stack direction:
+- Python
+- Flask
+- Redis
+- Redis vector capabilities
+- Local LLM
+- agentic framework for EVA orchestration
+
+Default assumptions:
+- backend is the current focus
+- frontend may be partial, external, or imported later
+- repository should remain monorepo-friendly
+- implementation should be simple, modular, and easy to evolve
+
+Do not assume final production scope.
+Do not over-engineer.
+Favor clear architecture and fast iteration.

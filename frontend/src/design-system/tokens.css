@@ -1,0 +1,74 @@
+/**
+ * Design tokens — ADR-001-DESIGN-SYSTEM.md
+ * Consume via var(--ds-*) in Tailwind arbitrary values, e.g. text-[var(--ds-text-primary)]
+ */
+:root {
+  --ds-primary-brand: #135bec;
+  --ds-primary-action: #4e37f6;
+  --ds-primary-accent: #6e56cf;
+
+  --ds-bg-primary: #ffffff;
+  --ds-bg-secondary: #fcfcfd;
+  --ds-bg-tertiary: #f3f4f7;
+  --ds-bg-accent-tint: rgba(0, 64, 255, 0.03);
+  --ds-bg-accent-purple: #ebf0ff;
+
+  --ds-text-primary: #020617;
+  --ds-text-secondary: #64748b;
+  --ds-text-muted: rgba(0, 5, 29, 0.45);
+
+  --ds-border: rgba(0, 9, 50, 0.12);
+  --ds-border-alt: rgba(0, 0, 0, 0.12);
+  --ds-border-accent: rgba(0, 55, 237, 0.33);
+
+  --ds-badge-bg: #eaecf0;
+  --ds-badge-text: #64748b;
+
+  --ds-success: #15803d;
+  --ds-success-bg: #ecfdf5;
+  --ds-warning-surface: #fef3c7;
+  --ds-warning-text: #854d0e;
+  --ds-danger: #dc2626;
+  --ds-danger-soft-bg: #fef2f2;
+
+  --ds-shadow-card: 0px 12px 32px -16px rgba(0, 0, 51, 0.06), 0px 8px 40px 0px rgba(0, 0, 0, 0.05);
+
+  --ds-radius-xs: 3px;
+  --ds-radius-input: 4px;
+  --ds-radius-button: 8px;
+  --ds-radius-card: 12px;
+  --ds-radius-pill: 9999px;
+
+  --ds-header-min-height: 64px;
+  --ds-rail-width: 64px;
+
+  /* Guided-demo CTA outline + pulse (all moments / workflow) */
+  --ds-cta-highlight: #5164f4;
+  --ds-cta-ring: var(--ds-cta-highlight);
+  --ds-cta-glow: rgb(81 100 244 / 0.35);
+}
+
+@keyframes ds-cta-pulse-ring {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 2px var(--ds-bg-primary),
+      0 0 0 4px var(--ds-cta-glow),
+      0 0 20px rgb(81 100 244 / 0.25);
+  }
+  50% {
+    box-shadow:
+      0 0 0 2px var(--ds-bg-primary),
+      0 0 0 6px rgb(81 100 244 / 0.45),
+      0 0 28px rgb(81 100 244 / 0.35);
+  }
+}
+
+/* Guided demo: draw attention to the next expected click */
+.ds-cta-highlight {
+  position: relative;
+  z-index: 2;
+  animation: ds-cta-pulse-ring 1.6s ease-in-out infinite;
+  outline: 2px solid var(--ds-cta-ring);
+  outline-offset: 2px;
+}

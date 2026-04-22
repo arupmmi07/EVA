@@ -1,0 +1,71 @@
+---
+description: EVA client–service JSON contract, inputPanel shape, skills registry + Redis vectors
+alwaysApply: true
+---
+
+## Product alignment
+
+This monorepo implements **EVA** as the WebPT Gen3–style **governed conversational assistant** for the POC. Long-form UX/architecture PDFs are **design north stars**, not binding implementation specs until the team adopts them.
+
+## Transport (POC)
+
+- Use **HTTP POST** (request/response JSON) between EVA Client and EVA Service.
+- **WebSocket / streaming** is out of scope until explicitly added; keep handlers compatible with a future upgrade.
+
+## LLM backends (service)
+
+- `LLM_PROVIDER=openai_compatible` → `/v1/chat/completions` (OpenAI, proxies, vLLM OpenAI mode).
+- `LLM_PROVIDER=ollama` → native Ollama `/api/chat`.
+- `LLM_PROVIDER=auto` (default) → choose **ollama** when `LLM_BASE_URL` looks like Ollama (`:11434` or host `ollama`), else **openai_compatible**.
+- Repository targets **Python 3.11+** for development; keep code compatible with that baseline.
+
+## Message types
+
+- **EVAClientRequest** — client → service  
+- **EVAServiceResponse** — service → client  
+
+## Request contract (POC v1)
+
+Top-level fields (extend later; do not break existing keys without versioning):
+
+- `messageType`: `"EVAClientRequest"`
+- `version`: semantic string (e.g. `"1.0"`)
+- `requestId`, `timestamp` (optional but recommended)
+- **`query`**: user input object (at minimum `rawInput` string; optional `type`, `language`, etc. later)
+- **`inputPanel`**: structured snapshot of client + app chrome, containing at least:
+  - **`render`**: EVA chat window state for the custom renderer (layout, visible blocks/message ids, draft state, events — evolve as needed)
+  - **`rightPanel`**: right-side application state (active module/screen, entity ids, `hasUnsavedWork`, navigation targets, actions the user can take — enough for the service to propose **declarative** right-panel instructions)
+
+The service **does not** own the live UI; it returns **instructions**. The client owns authoritative UI state and sends updates after user actions.
+
+## Response contract (POC v1)
+
+- `messageType`: `"EVAServiceResponse"`
+- `version`, `requestId`, `responseId`, `timestamp`, `status`
+- **`conversation`**: assistant turn identity (e.g. `message.role`, `message.text`, ids)
+- **`render`**: schema-driven **blocks** for the EVA chat renderer (not HTML from the server)
+- **`rightPanel`**: declarative command (`action`, `target`, `state`, optional `prompt` / `pendingTarget` for unsaved-work flows later)
+- **`clientStatePatch`** (optional): suggested small updates the client may merge (e.g. active context id)
+- **`metadata`** (optional): intent, confidence, trace id — no PHI
+
+## State ownership
+
+- **Client owns** rendered history, live right-panel widgets, and final navigation decisions (may refuse or confirm prompts).
+- **Service owns** NLU/skill routing, response schema, and **recommended** render blocks + right-panel **intent**.
+
+## Skills model (POC)
+
+- A **skill** is a **capability domain** (e.g. front-desk **appointment booking**), analogous to “knowing a subject”: procedures, edge cases, and guardrails expressed as **text** for retrieval.
+- **Skill registry**: small **JSON** file (source of truth list: `skill_id`, metadata, paths to knowledge). A SQL DB is a future swap-in.
+- **Redis**: stores **embedding vectors** + indexed text blobs for **similarity search** over skill knowledge. Registry lists skills; vectors live in Redis for retrieval.
+- **Flow**: user request → **similarity search** (top‑k) → **LLM** chooses best skill / clarifying question (no multi-skill composition requirement until product decides) → **LLM** (or template) emits **EVAServiceResponse** matching the contract.
+- **POC scope**: prioritize **booking + scheduler-style** general scenarios; **no** real POS/EMR/scheduler microservices yet — mock or generic right-panel hints only.
+
+## Compliance / business modules
+
+- Do **not** implement production business modules (POS, EMR, scheduler MS) in this phase.
+- Responses and skills should stay **generic / demo-safe** unless wired to real governed data sources.
+
+## Naming
+
+- Prefer **`inputPanel`** in JSON (not `panelInput`) for requests unless an existing client already shipped the other name.

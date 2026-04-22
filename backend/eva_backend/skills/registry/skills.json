@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "skills": [
+    {
+      "skill_id": "front_desk.appointment_booking",
+      "display_name": "Appointment booking",
+      "description": "Book, cancel, reschedule, or modify appointments; handle live patient and front-desk edge cases.",
+      "category": "scheduling",
+      "tags": ["booking", "cancel", "reschedule", "appointment"],
+      "knowledge_files": ["booking.md"]
+    },
+    {
+      "skill_id": "front_desk.scheduler_view",
+      "display_name": "Scheduler & calendar view",
+      "description": "Navigate and interpret the schedule grid, unconfirmed list, filters, and day-level calendar context.",
+      "category": "scheduling",
+      "tags": ["scheduler", "calendar", "unconfirmed", "schedule"],
+      "knowledge_files": ["scheduler_view.md"]
+    }
+  ]
+}

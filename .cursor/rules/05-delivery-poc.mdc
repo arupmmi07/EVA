@@ -1,0 +1,29 @@
+---
+description: POC delivery and implementation behavior
+alwaysApply: true
+---
+
+Delivery guidance:
+
+1. This is a POC. Keep scope tight.
+2. Prefer incremental implementation.
+3. Build the minimum that proves architecture and flow.
+4. When asked to implement, favor:
+   - scaffold first
+   - then core path
+   - then optional enhancements
+
+5. Always be conscious of what belongs in:
+   - now
+   - later
+   - optional extension
+
+6. When generating plans, clearly mark:
+   - POC must-have
+   - phase 2
+   - future ideas
+
+Avoid:
+- enterprise-grade complexity before validation
+- unnecessary abstractions
+- speculative features without request

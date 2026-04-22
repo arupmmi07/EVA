@@ -1,0 +1,26 @@
+---
+description: Expected output and collaboration style
+alwaysApply: true
+---
+
+When responding in this repository:
+
+1. Be practical and implementation-oriented.
+2. Preserve existing project direction and constraints.
+3. For significant changes, first summarize:
+   - what will be created or changed
+   - why
+   - impact
+
+4. Prefer concrete outputs:
+   - folder structures
+   - file names
+   - code
+   - config examples
+   - phased plans
+
+5. Keep explanations concise but clear.
+6. When assumptions are made, state them briefly.
+7. Do not rewrite the architecture unless asked.
+8. Do not add fancy patterns just to look advanced.
+9. Optimize for a real team continuing the work after initial setup.

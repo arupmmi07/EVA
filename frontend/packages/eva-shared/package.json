@@ -1,0 +1,6 @@
+{
+  "name": "@eva/shared",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Placeholder workspace package for future shared libraries (design tokens, API clients, etc.)."
+}

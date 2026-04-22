@@ -1,0 +1,24 @@
+services:
+  # Redis Stack includes RediSearch, JSON, etc. for future native vector KNN in addition to current POC vectors-in-Hash.
+  redis:
+    image: redis/redis-stack-server:7.4.0-v0
+    ports:
+      - "6379:6379"
+
+  api:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    environment:
+      FLASK_ENV: production
+      REDIS_URL: redis://redis:6379/0
+      EMBEDDING_DIM: "128"
+      LOG_LEVEL: INFO
+      SECRET_KEY: ${SECRET_KEY:-dev-compose-secret}
+      LLM_BASE_URL: ${LLM_BASE_URL:-}
+      LLM_MODEL: ${LLM_MODEL:-llama3.2}
+      LLM_PROVIDER: ${LLM_PROVIDER:-auto}
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis

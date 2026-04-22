@@ -1,0 +1,83 @@
+# Commit this file first, then stage other paths — otherwise Git may pick up node_modules / .venv.
+
+# --- Largest dirs (repo-root, explicit) ---
+/backend/.venv/
+/frontend/node_modules/
+
+# --- Environment & secrets (keep *.example tracked) ---
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.test
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+
+# --- Python ---
+**/.venv/
+venv/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+*.manifest
+*.spec
+.pytest_cache/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.ruff_cache/
+.hypothesis/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+*.log
+local_settings.py
+
+# --- Node / frontend ---
+node_modules/
+**/node_modules/
+frontend/dist/
+frontend/.vite/
+*.tsbuildinfo
+.npm
+.eslintcache
+.stylelintcache
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+
+# --- Build outputs ---
+dist/
+build/
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# --- Editors (local only) ---
+.idea/
+*.swp
+*.swo
+*~
+
+# --- Misc ---
+*.bak
+*.tmp
+.temp/
+

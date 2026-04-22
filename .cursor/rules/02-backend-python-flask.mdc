@@ -1,0 +1,29 @@
+---
+description: Python and Flask backend rules
+alwaysApply: true
+---
+
+Backend rules:
+- Use Python as primary backend language.
+- Use Flask for the API layer.
+- Prefer app factory structure.
+- Use blueprints for route grouping when needed.
+- Use environment-based configuration.
+- Keep route handlers thin.
+- Put core logic into services/modules.
+- Use type hints where practical.
+- Prefer dataclasses or pydantic-style schemas if needed for clarity.
+- Add error handling and structured logging where helpful.
+- Keep dependencies minimal unless justified.
+
+Preferred backend qualities:
+- readable
+- modular
+- testable
+- easy for a small team to maintain
+
+Avoid:
+- large monolithic app.py files
+- mixing prompt text directly into routes
+- hardcoded environment values
+- tightly coupling service logic to Flask request objects

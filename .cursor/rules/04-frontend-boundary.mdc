@@ -1,0 +1,20 @@
+---
+description: Frontend integration boundary rules
+alwaysApply: true
+---
+
+Frontend rules for this phase:
+
+1. FE and BE belong in the same repository, but backend must not depend on FE being complete.
+2. FE is expected to follow micro-frontend architecture eventually.
+3. Another team member may build or import the FE separately.
+4. Do not tightly bind backend contracts to temporary FE assumptions.
+5. Define clean API contracts that can support:
+   - EVA chat client
+   - future EMR embedding
+   - future right-panel structured views
+
+If creating FE placeholders:
+- keep them minimal
+- keep them decoupled
+- do not let placeholder FE distort backend design

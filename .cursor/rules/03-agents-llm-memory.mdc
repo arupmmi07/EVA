@@ -1,0 +1,28 @@
+---
+description: Rules for EVA agent, LLM, Redis, and memory design
+alwaysApply: true
+---
+
+EVA backend design guidance:
+
+1. EVA is the main agent entry point in this POC.
+2. Keep the first version centered around a single main orchestrator agent.
+3. Do not introduce multiple autonomous agents unless explicitly requested.
+4. Use an abstraction for local LLM interaction so provider/runtime can change later.
+5. Redis should be used pragmatically for:
+   - session state
+   - cache
+   - short-term memory
+   - vector storage/search where applicable
+
+6. Keep prompt management separate from API code.
+7. Keep memory/state handling separate from LLM invocation logic.
+8. **Skills**: registry JSON lists skills; **Redis** holds vectors / searchable skill text; orchestration = retrieve → LLM pick / clarify → LLM (or template) emit **EVAServiceResponse** with `render.blocks` and `rightPanel` commands — not free-form HTML in routes.
+9. Design tool calling or workflow execution as extensible modules (business MS and real EMR hooks come later).
+10. Prefer deterministic, governed orchestration patterns over hidden implicit logic.
+
+For now, optimize for:
+- local development
+- understandable code
+- simple orchestration
+- future expansion
