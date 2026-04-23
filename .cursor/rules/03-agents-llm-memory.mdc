@@ -17,7 +17,7 @@ EVA backend design guidance:
 
 6. Keep prompt management separate from API code.
 7. Keep memory/state handling separate from LLM invocation logic.
-8. **Skills**: registry JSON lists skills; **Redis** holds vectors / searchable skill text; orchestration = retrieve → LLM pick / clarify → LLM (or template) emit **EVAServiceResponse** with `render.blocks` and `rightPanel` commands — not free-form HTML in routes.
+8. **Skills**: registry JSON lists skills; **Redis** holds vectors / searchable skill text; orchestration = retrieve → LLM pick / clarify → LLM (or template) emit **EVAServiceResponse** with `outputPanel.render.blocks` and `outputPanel.rightPanel` commands — not free-form HTML in routes.
 9. Design tool calling or workflow execution as extensible modules (business MS and real EMR hooks come later).
 10. Prefer deterministic, governed orchestration patterns over hidden implicit logic.
 

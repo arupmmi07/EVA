@@ -16,13 +16,17 @@ The backend follows a layered layout: HTTP API → application services (EVA orc
 | Config | `eva_backend/config/` | Dataclass settings from environment variables |
 | Infrastructure | `deploy/` | Docker image and compose for Redis + API |
 
-## Request flow (chat)
+## Request flow (governed EVA)
 
-1. Client `POST /api/eva/chat` with `{ "message": "...", "session_id": "optional" }`.
-2. Route validates input and calls `EvaOrchestrator.handle_chat_turn`.
-3. Orchestrator loads system prompt from `prompts/templates`, optionally touches Redis, builds `LLMCompletionRequest`.
-4. `LLMProvider.complete` returns text (live HTTP or stub when unset).
-5. JSON response returns `reply`, `session_id`, and `redis_ok` for observability in POC.
+1. Client `POST /api/eva/chat` with **`EVAClientRequest`** (`query`, `inputPanel` with `render` + `rightPanel`).
+2. `handle_eva_chat_request` runs **skill resolution** (chunk vector search + skill-router LLM), then the **EVA agent orchestrator** LLM (`eva_agent_orchestrator_system.txt`) which emits JSON for assistant text, `render_blocks`, and `rightPanel` (mapped server-side into **`outputPanel`**).
+3. Response is **`EVAServiceResponse`** for EMR / MFE rendering (`conversation` + **`outputPanel`** + `metadata`). Metadata includes nested `pipeline.routing` and `pipeline.orchestrator`.
+
+**Stage 1 only:** `POST /api/eva/skill-resolution` with the same body → **`EVASkillResolutionResponse`** (skill resolution metadata, no orchestrator).
+
+**Legacy smoke:** `POST /api/eva/chat/legacy` with `{ "message": "...", "session_id": "optional" }` → `EvaOrchestrator.handle_chat_turn` → `{ reply, session_id, redis_ok }`.
+
+**Retired:** `POST /api/eva/message` returns **410** (use `skill-resolution` + `chat` above).
 
 ## POC vs later scope
 

@@ -17,6 +17,7 @@ import type { SchedulerToast } from '../scheduler/SchedulerRightPane';
 import { COMORBIDITIES_CHIP, getActiveCtaHints, getChatSuggestionChips } from '../utils/ctaHints';
 import { normalizeText } from '../utils/format';
 import { MOMENT3_CHECK_IN_CHIP } from '@/moments/moment3Copy';
+import { isEvaBackendChatEnabled } from '../api/evaBackend';
 import { appendFromEvaResponse, postEvaMessage } from '../api/postEvaMessage';
 import { applyEvaRightPanelFromResponse } from '../orchestration/rightPanelOrchestrator';
 
@@ -505,7 +506,7 @@ export function useEvaWorkflow({ momentId }: { momentId: MomentId }) {
     setChatInput('');
     const normalized = normalizeText(text);
 
-    if (import.meta.env.VITE_EVA_USE_BACKEND === '1') {
+    if (isEvaBackendChatEnabled()) {
       const ts = stage === 'scheduler' ? ('07:48 am' as const) : ('07:53 PM' as const);
       void (async () => {
         appendChat({ id: `user-be-${Date.now()}`, kind: 'user', content: text, timestamp: ts });
@@ -830,6 +831,7 @@ export function useEvaWorkflow({ momentId }: { momentId: MomentId }) {
   };
 
   return {
+    evaApiLive: isEvaBackendChatEnabled(),
     stage,
     chatItems,
     chatInput,

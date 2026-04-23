@@ -12,7 +12,7 @@ Support therapists and front-desk staff when they need to **book**, **cancel**, 
 6. For **modifications** (insurance, CPT, duration): validate against scheduling rules; escalate if billing impact.
 
 ## Edge cases to surface (clarify, do not guess)
-- Multiple patients with the same name → ask which chart.
+- **Scheduling only:** name collisions when **booking**—multiple patients with the same name → ask which chart **for the appointment action** (not scribe/dictation state).
 - Request conflicts with **unsaved work** on the chart → recommend save/discard flow (client enforces).
 - After-hours booking → flag policy reminder.
 

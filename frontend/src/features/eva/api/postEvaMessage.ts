@@ -29,7 +29,7 @@ export async function postEvaMessage(
       },
     },
   };
-  const r = await fetch('/api/eva/message', {
+  const r = await fetch('/api/eva/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
@@ -43,7 +43,7 @@ export async function postEvaMessage(
 
 export function appendFromEvaResponse(append: (item: ChatItem) => void, res: EVAServiceResponse) {
   const parts: string[] = [];
-  for (const block of res.render?.blocks ?? []) {
+  for (const block of res.outputPanel?.render?.blocks ?? []) {
     if (block.type === 'text' && block.props && typeof block.props.text === 'string') {
       parts.push(block.props.text);
     }
@@ -58,7 +58,7 @@ export function appendFromEvaResponse(append: (item: ChatItem) => void, res: EVA
     content: text,
     timestamp: '07:48 am',
   });
-  const chips = (res.render?.blocks ?? []).find((b) => b.type === 'actionChips');
+  const chips = (res.outputPanel?.render?.blocks ?? []).find((b) => b.type === 'actionChips');
   const actions = chips?.props?.actions as { label?: string }[] | undefined;
   if (actions?.length) {
     append({

@@ -16,6 +16,62 @@
       "category": "scheduling",
       "tags": ["scheduler", "calendar", "unconfirmed", "schedule"],
       "knowledge_files": ["scheduler_view.md"]
+    },
+    {
+      "skill_id": "clinical.cpt_code_reasoning",
+      "display_name": "CPT code reasoning",
+      "description": "Explain suggested CPT codes, link them to documented treatment, and improve coding confidence without inventing billing facts.",
+      "category": "clinical_documentation",
+      "tags": ["CPT", "billing", "coding", "modifiers", "units", "timed", "therapeutic exercise", "97110", "documentation"],
+      "knowledge_files": ["cpt_coding.md"]
+    },
+    {
+      "skill_id": "clinical.note_summaries",
+      "display_name": "Note summaries",
+      "description": "Summarize evaluation, daily, or progress notes from documented chart content to speed documentation and handoffs.",
+      "category": "clinical_documentation",
+      "tags": ["summary", "evaluation", "daily note", "SOAP", "progress note", "documentation", "handoff"],
+      "knowledge_files": ["note_summaries.md"]
+    },
+    {
+      "skill_id": "clinical.chart_clinical_qa",
+      "display_name": "Chart clinical Q&A",
+      "description": "Answer questions about goals, treatments performed, and clinical progression grounded in the active chart and visit.",
+      "category": "clinical_documentation",
+      "tags": ["goals", "treatments", "progression", "plan of care", "POC", "ROM", "functional", "patient chart"],
+      "knowledge_files": ["chart_clinical_qa.md"]
+    },
+    {
+      "skill_id": "clinical.compliance_documentation",
+      "display_name": "Compliance & note quality",
+      "description": "Surface documentation and compliance gaps, medical necessity alignment, and sign-off readiness for the active note.",
+      "category": "compliance",
+      "tags": ["compliance", "audit", "Medicare", "KX", "signature", "defensible", "medical necessity", "quality"],
+      "knowledge_files": ["compliance_documentation.md"]
+    },
+    {
+      "skill_id": "clinical.scope_and_grounding",
+      "display_name": "Chart scope & grounding",
+      "description": "Clarify active-chart-only rules, documented-data-only answers, clinic context, and limits when patients relocate across sites.",
+      "category": "governance",
+      "tags": ["active chart", "context", "clinic", "relocated", "transfer", "no assumptions", "PHI", "data limits"],
+      "knowledge_files": ["scope_grounding.md"]
+    },
+    {
+      "skill_id": "platform.eva_session_context",
+      "display_name": "Eva session & multitab context",
+      "description": "Per-tab patient binding, scribe pause/resume, and how historical questions apply when the product stores Q&A history.",
+      "category": "platform",
+      "tags": ["tabs", "multiple patients", "scribe", "pause", "resume", "history", "session", "parallel"],
+      "knowledge_files": ["eva_session_multitab.md"]
+    },
+    {
+      "skill_id": "platform.multi_clinic_visibility",
+      "display_name": "Multi-clinic operations",
+      "description": "Clinic selector, switching sites, and schedule or patient suggestions across all therapist-associated clinics when authorized.",
+      "category": "platform",
+      "tags": ["multi-clinic", "clinic switch", "schedule", "locations", "associated clinics", "visibility"],
+      "knowledge_files": ["multi_clinic.md"]
     }
   ]
 }

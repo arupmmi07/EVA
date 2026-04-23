@@ -25,6 +25,7 @@ export function ChatPane({
   sharedScreenshotsLayout,
   ctaHints,
   schedulerChrome,
+  evaApiLive = false,
 }: {
   chatItems: ChatItem[];
   chatInput: string;
@@ -46,6 +47,8 @@ export function ChatPane({
   ctaHints: ReadonlySet<CtaHintId>;
   /** When set, use scheduler chat chrome even if `stage` is not `scheduler` (e.g. clinician moment). */
   schedulerChrome?: boolean;
+  /** When true, messages are sent to the real EVA Flask `/api/eva/chat` (see `VITE_EVA_USE_BACKEND`). */
+  evaApiLive?: boolean;
 }) {
   const showHistory = stage === 'session' || stage === 'sessionAccepted' || stage === 'sessionStopped';
   const schedulerChromeVisual = schedulerChrome ?? stage === 'scheduler';
@@ -172,6 +175,26 @@ export function ChatPane({
               : 'space-y-2 px-5 pb-5 pt-2'
           }`}
         >
+          {evaApiLive ? (
+            <div
+              className={
+                figmaWs
+                  ? focusedComposerOnly
+                    ? 'pb-1'
+                    : conversationScreenshotComposerFullWidth
+                      ? 'px-0 pb-1'
+                      : 'pb-1'
+                  : 'pb-1'
+              }
+            >
+              <span
+                className="inline-block rounded-md border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[11px] font-medium text-emerald-900"
+                title="Chat is sent to Flask POST /api/eva/chat (Vite proxies /api to the backend)."
+              >
+                EVA API
+              </span>
+            </div>
+          ) : null}
           <div
             className={
               figmaWs

@@ -37,10 +37,14 @@ class OpenAICompatibleLLMProvider:
         }
         try:
             data = json.dumps(payload).encode("utf-8")
+            headers: dict[str, str] = {"Content-Type": "application/json"}
+            key = get_settings().openai_api_key
+            if key:
+                headers["Authorization"] = f"Bearer {key}"
             http_req = urllib.request.Request(
                 f"{self._base}/v1/chat/completions",
                 data=data,
-                headers={"Content-Type": "application/json"},
+                headers=headers,
                 method="POST",
             )
             with urllib.request.urlopen(http_req, timeout=120) as resp:

@@ -22,8 +22,10 @@ class Settings:
     llm_base_url: str | None
     llm_model: str | None
     llm_provider: str
+    openai_api_key: str | None
     log_level: str
     embedding_dim: int
+    expose_knowledge_api: bool
 
 
 @lru_cache(maxsize=1)
@@ -40,6 +42,15 @@ def get_settings() -> Settings:
         llm_base_url=_env("LLM_BASE_URL"),
         llm_model=_env("LLM_MODEL", "llama3.2"),
         llm_provider=(_env("LLM_PROVIDER", "auto") or "auto").strip().lower(),
+        openai_api_key=_env("OPENAI_API_KEY"),
         log_level=_env("LOG_LEVEL", "INFO") or "INFO",
         embedding_dim=embedding_dim,
+        expose_knowledge_api=_env_truthy("EVA_EXPOSE_KNOWLEDGE_API", default=False),
     )
+
+
+def _env_truthy(key: str, *, default: bool = False) -> bool:
+    v = os.environ.get(key)
+    if v is None or v == "":
+        return default
+    return v.strip().lower() in ("1", "true", "yes", "on")

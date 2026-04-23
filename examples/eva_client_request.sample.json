@@ -1,0 +1,21 @@
+{
+  "messageType": "EVAClientRequest",
+  "version": "1.0",
+  "requestId": "req_demo_001",
+  "timestamp": "2026-04-22T12:00:00Z",
+  "query": {
+    "type": "text",
+    "rawInput": "How do I see unconfirmed appointments in the scheduler?"
+  },
+  "inputPanel": {
+    "render": {
+      "activeTab": "eva"
+    },
+    "rightPanel": {
+      "screen": "scheduler",
+      "subScreen": "todaysPatients",
+      "hasUnsavedWork": false
+    }
+  },
+  "debug": true
+}

@@ -61,6 +61,7 @@ export function EvaWorkflowApp({ momentId }: { momentId: MomentId }) {
                     sharedScreenshotsLayout={sharedScreenshotsLayout}
                     ctaHints={workflow.ctaHints}
                     schedulerChrome={workflow.shellSchedulerChrome}
+                    evaApiLive={workflow.evaApiLive}
                   />
                 </section>
               ) : null}
@@ -142,6 +143,7 @@ export function EvaWorkflowApp({ momentId }: { momentId: MomentId }) {
                     sharedScreenshotsLayout={sharedScreenshotsLayout}
                     ctaHints={workflow.ctaHints}
                     schedulerChrome={workflow.shellSchedulerChrome}
+                    evaApiLive={workflow.evaApiLive}
                   />
                 </div>
               </div>

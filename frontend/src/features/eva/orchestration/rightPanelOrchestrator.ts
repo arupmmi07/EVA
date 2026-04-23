@@ -1,5 +1,5 @@
 /**
- * POC client-side "Panel Coordinator" lite: maps EVAServiceResponse.rightPanel
+ * POC client-side "Panel Coordinator" lite: maps EVAServiceResponse.outputPanel.rightPanel
  * onto the existing scheduler accordion state (no MFE shell yet).
  *
  * Later: shell listens for events, loads MFEs, and runs full navigation.
@@ -36,7 +36,7 @@ export function applyEvaRightPanelFromResponse(
   res: EVAServiceResponse,
   ctx: RightPanelOrchestratorContext,
 ): void {
-  const rp = res.rightPanel;
+  const rp = res.outputPanel?.rightPanel;
   if (!rp || rp.action === 'none') return;
   if (ctx.stage !== 'scheduler') return;
 

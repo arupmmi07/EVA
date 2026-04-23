@@ -17,12 +17,13 @@ This monorepo implements **EVA** as the WebPT Gen3–style **governed conversati
 - `LLM_PROVIDER=openai_compatible` → `/v1/chat/completions` (OpenAI, proxies, vLLM OpenAI mode).
 - `LLM_PROVIDER=ollama` → native Ollama `/api/chat`.
 - `LLM_PROVIDER=auto` (default) → choose **ollama** when `LLM_BASE_URL` looks like Ollama (`:11434` or host `ollama`), else **openai_compatible**.
-- Repository targets **Python 3.11+** for development; keep code compatible with that baseline.
+- Repository targets **Python 3.9+** for development (3.11+ recommended when available).
 
 ## Message types
 
 - **EVAClientRequest** — client → service  
-- **EVAServiceResponse** — service → client  
+- **EVAServiceResponse** — service → client (full governed turn from **`POST /api/eva/chat`**)  
+- **EVASkillResolutionResponse** — service → client (**`POST /api/eva/skill-resolution`**: skill resolution = retrieval + classifier LLM; not a conversational resource)  
 
 ## Request contract (POC v1)
 
@@ -43,10 +44,9 @@ The service **does not** own the live UI; it returns **instructions**. The clien
 - `messageType`: `"EVAServiceResponse"`
 - `version`, `requestId`, `responseId`, `timestamp`, `status`
 - **`conversation`**: assistant turn identity (e.g. `message.role`, `message.text`, ids)
-- **`render`**: schema-driven **blocks** for the EVA chat renderer (not HTML from the server)
-- **`rightPanel`**: declarative command (`action`, `target`, `state`, optional `prompt` / `pendingTarget` for unsaved-work flows later)
+- **`outputPanel`**: mirror of **`inputPanel`** — **`outputPanel.render`** (schema-driven **blocks** for the EVA chat renderer; not HTML from the server) and **`outputPanel.rightPanel`** (declarative command: `action`, `target`, `state`, optional `prompt` / `pendingTarget`)
 - **`clientStatePatch`** (optional): suggested small updates the client may merge (e.g. active context id)
-- **`metadata`** (optional): intent, confidence, trace id — no PHI
+- **`metadata`** (optional): pipeline trace, **`display`** (left/right panel instructions for the host), `chosen_skill_id` — no PHI
 
 ## State ownership
 
@@ -58,7 +58,7 @@ The service **does not** own the live UI; it returns **instructions**. The clien
 - A **skill** is a **capability domain** (e.g. front-desk **appointment booking**), analogous to “knowing a subject”: procedures, edge cases, and guardrails expressed as **text** for retrieval.
 - **Skill registry**: small **JSON** file (source of truth list: `skill_id`, metadata, paths to knowledge). A SQL DB is a future swap-in.
 - **Redis**: stores **embedding vectors** + indexed text blobs for **similarity search** over skill knowledge. Registry lists skills; vectors live in Redis for retrieval.
-- **Flow**: user request → **similarity search** (top‑k) → **LLM** chooses best skill / clarifying question (no multi-skill composition requirement until product decides) → **LLM** (or template) emits **EVAServiceResponse** matching the contract.
+- **Flow**: user request → **similarity search** (top‑k) → **skill-router LLM** → optional **`POST /api/eva/skill-resolution`** (OpenAPI-style **resolution** operation) → **agent orchestrator LLM** on **`POST /api/eva/chat`** emits **EVAServiceResponse** (`outputPanel.render` + `outputPanel.rightPanel` + `metadata`). Retired: **`POST /api/eva/message`** (410).
 - **POC scope**: prioritize **booking + scheduler-style** general scenarios; **no** real POS/EMR/scheduler microservices yet — mock or generic right-panel hints only.
 
 ## Compliance / business modules

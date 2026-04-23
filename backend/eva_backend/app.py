@@ -10,7 +10,7 @@ from eva_backend.api import register_blueprints
 from eva_backend.config import get_settings
 from eva_backend.errors import AppError
 from eva_backend.logging_config import configure_logging
-from eva_backend.skills.skill_index import ensure_skills_indexed
+from eva_backend.skills.knowledge_chunks import ensure_knowledge_indexed
 
 logger = logging.getLogger(__name__)
 
@@ -28,9 +28,9 @@ def create_app() -> Flask:
     register_blueprints(app)
 
     try:
-        ensure_skills_indexed()
+        ensure_knowledge_indexed()
     except Exception as exc:  # pragma: no cover
-        logger.warning("skill index bootstrap skipped: %s", exc)
+        logger.warning("knowledge index bootstrap skipped: %s", exc)
 
     @app.errorhandler(AppError)
     def handle_app_error(err: AppError):  # type: ignore[no-untyped-def]
